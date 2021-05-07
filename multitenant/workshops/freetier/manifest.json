@@ -1,20 +1,24 @@
-{ 
-    "workshoptitle":"Oracle Multitenant Fundamentals",  
-    "help": "livelabs-help-db_us@oracle.com",
+{
+"workshoptitle": "Oracle Multitenant Fundamentals",
+"include": {"starter-file.sql":"../../data-load/files/starter-file.sql",
+          "sample.json":"../../data-load/files/sample.json",
+          "step2.md":"../../data-load/files/step2.md"},
+"support": "https://community.oracle.com/tech/developers/categories/autonomous-database-shared",
+"help": "livelabs-help-**enterarea**_us@oracle.com",
 	"tutorials": [
         {
             "title": "Introduction",
             "description": "Introduction to Multitenant Workshop",
             "filename": "./../../intro/intro.md"
         },
-        {         
+        {
             "title": "Getting Started",
             "description": "Login to Oracle Cloud",
             "partnumber": "Ennnnn_01",
             "publisheddate": "03/10/2020",
             "contentid": "12nnnn",
             "filename": "https://raw.githubusercontent.com/oracle/learning-library/master/common/labs/cloud-login/pre-register-free-tier-account.md"
-        }, 
+        },
         {
             "title": "Lab 1: Generate SSH Keys - Cloud Shell",
             "description": "Generate SSH Key",
@@ -34,7 +38,7 @@
         {
             "title": "Lab 4: Application Containers",
             "description": "Using Application Containers with Multitenant",
-            "filename": "./../../app-containers/app-containers.md"
+            "filename": "./../../manage-app/manage-app.md"
         },
         {
             "title": "Need Help?",
