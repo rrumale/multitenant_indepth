@@ -1076,6 +1076,6 @@ You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
 
-- **Author** - Patrick Wheeler, VP, Multitenant Product Management
+- **Author** - Patrick Wheeler, Vijay Balebail
 - **Contributors** -  David Start, Anoosha Pilli, Brian McGraw, Quintin Hill, Rene Fontcha
 - **Last Updated By/Date** - Rene Fontcha, LiveLabs Platform Lead, NA Technology, April 2021
