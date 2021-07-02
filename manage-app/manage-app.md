@@ -1,10 +1,10 @@
 # Hands-on with Multitenant (Advanced)
 
-## Lab Objective
-
+Introduction
 This hands-on labs is designed to familiarize you with the Application Container functionality of Oracle Multitenant. In these labs, We will dive into the concepts of Application container and Proxy PDBs.
 
-### Lab Assumptions
+Prerequisites
+This lab assumes you have:
 
 - You need to have completed Lab 1 through Lab 3 and Step 0 of Lab 4.
 - This Lab is indipendent of Lab 4. However, you need to have run Step 0 of Lab4 if you plan to do only Lab 5.
@@ -13,8 +13,6 @@ The setup should have  two container databases running:
 
 - CDB1 running on port 1523
 - CDB2 running on port 1524
-
-
 
 ## Step 1 Creating an application root
 
