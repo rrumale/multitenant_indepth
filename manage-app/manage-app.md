@@ -6,7 +6,8 @@ This hands-on labs is designed to familiarize you with the Application Container
 
 ### Lab Assumptions
 
-- You need to have completed Lab 1 through Lab 3 to setup the environment.
+- You need to have completed Lab 1 through Lab 3 and Step 0 of Lab 4.
+- This Lab is indipendent of Lab 4. However, you need to have run Step 0 of Lab4 if you plan to do only Lab 5.
 
 The setup should have  two container databases running:
 
