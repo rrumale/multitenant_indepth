@@ -1,13 +1,15 @@
 # Clone, Plug and Drop
 
-## Introduction
+## Objective
 In this lab you will perform many multitenant basic tasks.  You will create a pluggable database (PDB), make a copy of this pluggable database, or clone it, explore the concepts of "plugging" and "unplugging" a PDB and finally drop it.  You will then explore the concepts of cloning unplugged databases and databases that are hot or active.
 
 *Estimated Workshop Time*: 1 hour
 
+## Introduction
+
 [](youtube:kzTQGs75IjA)
 
-### Prerequisites
+## Prerequisites
 
 This lab assumes you have:
 - A Free Tier, Paid or LiveLabs Oracle Cloud account
