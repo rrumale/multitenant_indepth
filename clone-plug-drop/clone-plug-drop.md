@@ -1,15 +1,25 @@
 # Clone, Plug and Drop
 
-## Objective
-In this lab you will perform many multitenant basic tasks.  You will create a pluggable database (PDB), make a copy of this pluggable database, or clone it, explore the concepts of "plugging" and "unplugging" a PDB and finally drop it.  You will then explore the concepts of cloning unplugged databases and databases that are hot or active.
-
-*Estimated Workshop Time*: 1 hour
-
 ## Introduction
+Oracle Multitenant enables an Oracle Database to function as a container database (CDB). A CDB consolidates multiple pluggable databases (PDB), a portable collection of schemas, schema objects, and non-schema objects. Whether deployed on-premises or in the cloud, with Oracle Multitenant, applications run unchanged in self-contained PDBs, improving resource utilization, management, and overall security.
 
 [](youtube:kzTQGs75IjA)
 
-## Prerequisites
+### Objective
+- Rapid cloning and provisioning
+    Local clones and remote clones
+    Database administrators save time by provisioning pluggable databases as clones locally or from across the network without disrupting the source.
+
+- Snapshot clones
+    Create storage efficient pluggable databases in seconds that mirror full data set copies of the source pluggable database for development and testing environments.
+
+- Refreshable PDBs
+    Maintain up to date copies of production databases by periodically topping them up with incremental transactions.
+
+*Estimated Workshop Time*: 2 hour
+
+
+### Prerequisites
 
 This lab assumes you have:
 - A Free Tier, Paid or LiveLabs Oracle Cloud account
