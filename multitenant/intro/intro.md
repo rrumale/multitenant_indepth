@@ -1,4 +1,4 @@
-# Introduction 
+# Introduction
 
 ## Oracle Multitenant
 From the point of view of an application, the pluggable database (PDB) is the database, in which applications run unchanged. PDBs can be very rapidly provisioned and a pluggable database is a portable database, which makes it very easy to move around, perhaps for load balancing or migration to the Cloud.
@@ -26,7 +26,7 @@ Every CDB has the following containers:
 
 The following figure shows a CDB with four containers: the root, seed, and two PDBs. Each PDB has its own dedicated application. A different PDB administrator manages each PDB. A common user exists across a CDB with a single identity. In this example, common user SYS can manage the root and every PDB. At the physical level, this CDB has a database instance and database files, just as a non-CDB does.
 
-![](./images/arch.png " ") 
+![](./images/arch.png " ")
 
 ## More Information on Multitenant
 
@@ -39,6 +39,5 @@ Oracle Database Product Management Videos on Multitenant
 ## Acknowledgements
 
 - **Authors/Contributors** - Patrick Wheeler, David Start, Vijay Balebail, Kay Malcolm
-- **Last Updated By/Date** - Kay Malcolm, March 2020
-- **Workshop Expiration Date** - March 31, 2021
-
+- **Last Updated By/Date** - Vijay Balebail, July 2021
+- **Workshop Expiration Date** - March 31, 2023

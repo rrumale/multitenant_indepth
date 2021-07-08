@@ -4,8 +4,6 @@
 
 This is a series of 12 hands-on labs designed to familiarize you with the Application Container functionality of Oracle Multitenant. In these labs, We will dive into the concepts of Application container and Proxy PDBs.
 
-
-
 ## Lab Assumptions
 
 - Each participant has been provided a username and password to the tenancy c4u03.
