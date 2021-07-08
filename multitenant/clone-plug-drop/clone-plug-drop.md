@@ -3,7 +3,7 @@
 ## Introduction
 In this lab you will perform many multitenant basic tasks.  You will create a pluggable database (PDB), make a copy of this pluggable database, or clone it, explore the concepts of "plugging" and "unplugging" a PDB and finally drop it.  You will then explore the concepts of cloning unplugged databases and databases that are hot or active.
 
-Estimated time: 2 - 3 hours
+*Estimated Workshop Time*: 2 - 3 hours
 
 [](youtube:kzTQGs75IjA)
 
@@ -98,7 +98,7 @@ The tasks you will accomplish in this step are:
     <copy>. oraenv</copy>
     CDB1
     ````
-    
+
     ````
     <copy>
     sqlplus /nolog
@@ -145,7 +145,7 @@ The tasks you will accomplish in this step are:
     <copy>create pluggable database PDB2 admin user PDB_Admin identified by oracle;
 
     alter pluggable database PDB2 open;
-    
+
     show pdbs;</copy>
     ````
 
@@ -173,7 +173,7 @@ The tasks you will accomplish in this step are:
 
     </copy>
     ````
-    
+
     ````
     <copy>create tablespace users datafile size 20M autoextend on next 1M maxsize unlimited segment space management auto;
     alter database default tablespace Users;
@@ -193,7 +193,7 @@ The tasks you will accomplish in this step are:
 8. Create a table **MY_TAB** in **PDB2**.
 
     ````
-    <copy>create table my_tab(my_col number); 
+    <copy>create table my_tab(my_col number);
     insert into my_tab values (1);
     commit;
     </copy>
@@ -328,7 +328,7 @@ The tasks you will accomplish in this step are:
     <copy>sqlplus /nolog </copy>
     ````
 1. Connect to the container **CDB1**.
-    
+
     ````
     <copy>connect sys/oracle@localhost:1523/cdb1 as sysdba</copy>
     ````
@@ -552,7 +552,7 @@ The tasks you will accomplish in this step are:
     <copy>sqlplus /nolog </copy>
     ````
 1. Connect to the container **CDB2**.
-    
+
     ````
     <copy>connect sys/oracle@localhost:1524/cdb2 as sysdba</copy>
     ````
@@ -1112,5 +1112,4 @@ You may now proceed to the next lab.
 
 - **Author** - Patrick Wheeler, VP, Multitenant Product Management
 - **Contributors** -  David Start, Anoosha Pilli, Brian McGraw, Quintin Hill
-- **Last Updated By/Date** - Kay Malcolm, Product Manager, DB Product Management, October 2020
-
+- **Last Updated By/Date** - Kay Malcolm, Product Manager, DB Product Management, July 2021

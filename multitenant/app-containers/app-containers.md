@@ -3,13 +3,13 @@
 ## Lab Introduction
 This is a series of 12 hands-on labs designed to familiarize you with the Application Container functionality of Oracle Multitenant. In these labs, we follow the journey of a notional company, Walt’s Malts, as their business expands from a single store to a global powerhouse – “from startup to starship”.
 
-Estimated time: 45 - 60 minutes
+*Estimated Workshop Time*: 45 - 60 minutes
 
 [](youtube:ZPOjjF3kCvo)
 
 ## Step 0: Connect to Your Instance and Login
 1. Before you begin, please connect to your instance
-   
+
     ````
     ssh -i ~/.ssh/<sshkeyname> opc@<Your Compute Instance Public IP Address>
     ````
@@ -26,7 +26,7 @@ Estimated time: 45 - 60 minutes
     <copy>. oraenv</copy>
     CDB1
     ````
-    
+
     ````
     <copy>
     sqlplus /nolog
@@ -114,7 +114,7 @@ The tasks you will accomplish in this step are:
     <copy>
     create table wm_Campaigns
     -- sharing = data
-    (Row_GUID         raw(16)           default Sys_GUID()                      primary key 
+    (Row_GUID         raw(16)           default Sys_GUID()                      primary key
     ,Name             varchar2(30)                                    not null  unique
     )
     ;
@@ -125,7 +125,7 @@ The tasks you will accomplish in this step are:
     <copy>
     create table wm_Products
     -- sharing = extended data
-    (Row_GUID         raw(16)           default Sys_GUID()                      primary key 
+    (Row_GUID         raw(16)           default Sys_GUID()                      primary key
     ,Name             varchar2(30)                                    not null  unique
     )
     ;
@@ -136,9 +136,9 @@ The tasks you will accomplish in this step are:
     <copy>
     create table wm_Orders
     -- sharing = metadata
-    (Row_GUID         raw(16)           default Sys_GUID()                      primary key 
+    (Row_GUID         raw(16)           default Sys_GUID()                      primary key
     ,Order_Number     number(16,0)      generated always as identity  not null  unique
-    ,Order_Date       date              default   current_date        not null 
+    ,Order_Date       date              default   current_date        not null
     ,Campaign_ID      raw(16)           
     )
     ;
@@ -147,7 +147,7 @@ The tasks you will accomplish in this step are:
 
     ````
     <copy>
-    alter table wm_Orders add constraint wm_Orders_F1 
+    alter table wm_Orders add constraint wm_Orders_F1
     foreign key (Campaign_ID)
     references wm_Campaigns(Row_GUID)
     disable
@@ -161,7 +161,7 @@ The tasks you will accomplish in this step are:
     <copy>
     create table wm_Order_Items
     -- sharing = metadata
-    (Row_GUID         raw(16)                    default Sys_GUID()           primary key 
+    (Row_GUID         raw(16)                    default Sys_GUID()           primary key
     ,Order_ID         raw(16)           not null
     ,Item_Num         number(16,0)      not null
     ,Product_ID       raw(16)           not null
@@ -173,7 +173,7 @@ The tasks you will accomplish in this step are:
 
     ````
     <copy>
-    alter table wm_Order_Items add constraint wm_Order_Items_F1 
+    alter table wm_Order_Items add constraint wm_Order_Items_F1
     foreign key (Order_ID)
     references wm_Orders(Row_GUID)
     disable
@@ -183,7 +183,7 @@ The tasks you will accomplish in this step are:
 
     ````
     <copy>
-    alter table wm_Order_Items add constraint wm_Order_Items_F2 
+    alter table wm_Order_Items add constraint wm_Order_Items_F2
     foreign key (Product_ID)
     references wm_Products(Row_GUID)
     disable
@@ -1084,7 +1084,7 @@ The tasks you will accomplish in this step are:
 
     ````
     <copy>
-    create public database link CDB2_DBLink 
+    create public database link CDB2_DBLink
     connect to System identified by oracle
     using 'localhost:1524/cdb2';
     </copy>
@@ -1100,7 +1100,7 @@ The tasks you will accomplish in this step are:
 
     ````
     <copy>
-    create public database link CDB2_DBLink 
+    create public database link CDB2_DBLink
     connect to system identified by oracle
     using 'localhost:1524/cdb2';
     </copy>
@@ -1212,7 +1212,7 @@ The tasks you will accomplish in this step are:
 
     ````
     <copy>
-    create public database link CDB1_DBLink 
+    create public database link CDB1_DBLink
     connect to system identified by oracle
     using 'localhost:1523/cdb1';
     </copy>
@@ -1247,7 +1247,7 @@ The tasks you will accomplish in this step are:
 
     ````
     <copy>
-    create public database link CDB1_DBLink 
+    create public database link CDB1_DBLink
     connect to system identified by oracle
     using 'localhost:1523/cdb1';
     </copy>
@@ -1355,7 +1355,7 @@ The tasks you will accomplish in this step are:
     ````
 
     ````
-    <copy>create pluggable database Tahoe from Tahoe@CDB1_DBLink 
+    <copy>create pluggable database Tahoe from Tahoe@CDB1_DBLink
     relocate availability max;</copy>
     ````
 
@@ -1442,14 +1442,14 @@ The tasks you will accomplish in this step are:
     -- sharing = metadata -- the default
     sharing = data
     -- sharing = extended data
-    (Row_GUID    raw(16)        default Sys_GUID() primary key 
+    (Row_GUID    raw(16)        default Sys_GUID() primary key
     ,Type_Code   varchar2(30)   not null
     ,Value_Code  varchar2(30)   not null
     )
     ;
     </copy>
     ````
-    
+
     ````
     <copy>
     alter table wm_List_Of_Values  add constraint wm_List_Of_Values_U1
@@ -1631,7 +1631,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>alter pluggable database application wmStore sync;</copy>
     ````
-    
+
     ````
     <copy>connect system/oracle@localhost:1524/TAHOE</copy>
     ````
@@ -1648,13 +1648,13 @@ The tasks you will accomplish in this step are:
     <copy>connect system/oracle@localhost:1523/cdb1</copy>
     ````
 
-    
+
     ````
     <copy>column c01 format 999999 heading "Con_ID"
     column c02 format a30    heading "Container"</copy>
     ````
 
-    
+
     ````
     <copy>ttitle "Containers"</copy>
     ````
@@ -1677,13 +1677,13 @@ The tasks you will accomplish in this step are:
     <copy>connect wmStore_Admin/oracle@localhost:1523/wmStore_Master</copy>
     ````
 
-    
+
     ````
     <copy>column c03 format a30    heading "Table Name"
     column c04 format a20    heading "Sharing Type"</copy>
     ````
 
-    
+
     ````
     <copy>ttitle "Sharing Modes for Campaigns, Products and Orders"</copy>
     ````
@@ -1708,13 +1708,13 @@ The tasks you will accomplish in this step are:
     <copy>connect wmStore_Admin/oracle@localhost:1523/Tulsa</copy>
     ````
 
-    
+
     ````
     <copy>column c1 format a20 heading "Origin Con_ID"
     column c2 format a30            heading "Product"</copy>
     ````
 
-    
+
     ````
     <copy>ttitle "Products Visible in Franchise Tulsa"</copy>
     ````
@@ -1748,7 +1748,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>connect wmStore_Admin/oracle@localhost:1523/wmStore_Master</copy>
     ````
-    
+
     ````
     <copy>alter pluggable database application wmStore begin patch 301;</copy>
     ````
@@ -1788,7 +1788,7 @@ The tasks you will accomplish in this step are:
     </copy>
     ````
 
-    
+
     ````
     <copy>commit;</copy>
     ````
@@ -1873,12 +1873,12 @@ The tasks you will accomplish in this step are:
     </copy>
     ````
 
-    
+
     ````
     <copy>commit;</copy>
     ````
 
-    
+
     ````
     <copy>alter pluggable database application wmStore end patch;</copy>
     ````
@@ -1890,7 +1890,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>connect system/oracle@localhost:1523/Tulsa</copy>
     ````
-    
+
     ````
     <copy>alter pluggable database application wmStore sync to patch 301;</copy>
     ````
@@ -1898,15 +1898,15 @@ The tasks you will accomplish in this step are:
     ````
     <copy>connect system/oracle@localhost:1523/California</copy>
     ````
-    
+
     ````
     <copy>alter pluggable database application wmStore sync to patch 301;</copy>
     ````
-        
+
     ````
     <copy>connect system/oracle@localhost:1523/NYC</copy>
     ````
-        
+
     ````
     <copy>alter pluggable database application wmStore sync to patch 301;</copy>
     ````
@@ -1922,11 +1922,11 @@ The tasks you will accomplish in this step are:
     ````
     <copy>connect system/oracle@localhost:1523/cdb1</copy>
     ````
-    
+
     ````
     <copy>ttitle off</copy>
     ````
-    
+
     ````
     <copy>set linesize 180</copy>
     ````
@@ -1948,7 +1948,7 @@ The tasks you will accomplish in this step are:
     </copy>
     ````
 
-    
+
     ````
     <copy>set echo on</copy>
     ````
@@ -2036,7 +2036,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>desc DBA_Applications</copy>
     ````
-    
+
     ````
     <copy>select * from DBA_Applications;</copy>
     ````
@@ -2058,7 +2058,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>desc DBA_App_Versions</copy>
     ````
-    
+
     ````
     <copy>select * from DBA_App_Versions;</copy>
     ````
@@ -2102,7 +2102,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>select * from DBA_App_PDB_Status;</copy>
     ````
-    
+
     ````
     <copy>set echo off</copy>
     ````
@@ -2126,7 +2126,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>set echo off</copy>
     ````
-    
+
     ![](./images/step10.6.1.png " ")
 
     ![](./images/step10.6.2.png " ")
@@ -2140,7 +2140,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>set echo on</copy>
     ````
-    
+
     ````
     <copy>connect system/oracle@localhost:1523/NYC</copy>
     ````
@@ -2235,10 +2235,10 @@ The tasks you will accomplish in this step are:
     ````
     <copy>
     connect system/oracle@localhost:1523/cdb1
-    
+
     create pluggable database Terminal_Master as application container
     admin user tc_admin identified by oracle;
-    
+
     alter pluggable database Terminal_Master open;
     </copy>
     ````
@@ -2250,24 +2250,24 @@ The tasks you will accomplish in this step are:
     ````
     <copy>
     connect system/oracle@localhost:1523/Terminal_Master
-    
+
     create pluggable database LHR
     admin user tc_admin identified by oracle;
-    
+
     create pluggable database SFO
     admin user tc_admin identified by oracle;
-    
+
     create pluggable database JFK
     admin user tc_admin identified by oracle;
-    
+
     create pluggable database LAX
     admin user tc_admin identified by oracle;
-    
+
     alter session set container=CDB$Root;
     alter pluggable database all open;
     </copy>
     ````
-    
+
     ![](./images/step12.2.png " ")
 
 3. Create the 1.0 Terminal Install.
@@ -2275,7 +2275,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>
     connect system/oracle@localhost:1523/Terminal_Master
-    
+
     alter pluggable database application Terminal begin install '1.0';
 
     connect system/oracle@localhost:1523/Terminal_Master
@@ -2302,19 +2302,19 @@ The tasks you will accomplish in this step are:
 
     create table tc_Products
     sharing = extended data
-    (Row_GUID         raw(16)           default Sys_GUID()                      primary key 
+    (Row_GUID         raw(16)           default Sys_GUID()                      primary key
     ,Name             varchar2(30)                                    not null  unique
     ,Local_Product_YN char(1)           default 'Y'                   not null
     )
     ;
-    
+
     alter table tc_Products add constraint Local_Product_Bool
     check (Local_Product_YN in ('Y','N'))
     ;
-    
+
     create table tc_Coupons
     sharing = data
-    (Row_GUID         raw(16)           default Sys_GUID()                      primary key 
+    (Row_GUID         raw(16)           default Sys_GUID()                      primary key
     ,Coupon_Number    number(16,0)      generated always as identity  not null  unique
     ,Campaign_Code    varchar2(30)
     ,Expiration_Date  date              default current_date+14
@@ -2329,16 +2329,16 @@ The tasks you will accomplish in this step are:
     <copy>
     create table tc_Orders
     sharing = metadata
-    (Row_GUID         raw(16)           default Sys_GUID()                      primary key 
+    (Row_GUID         raw(16)           default Sys_GUID()                      primary key
     ,Order_Number     number(16,0)      generated always as identity  not null  unique
-    ,Order_Date       date              default   current_date        not null 
+    ,Order_Date       date              default   current_date        not null
     ,Kiosk_Code       varchar2(30)      not null
     ,Coupon_ID        raw(16)
     ,Campaign_Code    varchar2(30)      null
     )
     ;
-    
-    alter table tc_Orders add constraint tc_Orders_F1 
+
+    alter table tc_Orders add constraint tc_Orders_F1
     foreign key (Coupon_ID)
     references tc_Coupons(Row_GUID)
     disable
@@ -2346,7 +2346,7 @@ The tasks you will accomplish in this step are:
 
     create table tc_Order_Items
     sharing = metadata
-    (Row_GUID         raw(16)                    default Sys_GUID()           primary key 
+    (Row_GUID         raw(16)                    default Sys_GUID()           primary key
     ,Order_ID         raw(16)           not null
     ,Item_Num         number(16,0)      not null
     ,Product_ID       raw(16)           not null
@@ -2354,12 +2354,12 @@ The tasks you will accomplish in this step are:
     )
     ;
 
-    alter table tc_Order_Items add constraint tc_Order_Items_F1 
+    alter table tc_Order_Items add constraint tc_Order_Items_F1
     foreign key (Order_ID)
     references tc_Orders(Row_GUID)
     disable
     ;
-    alter table tc_Order_Items add constraint tc_Order_Items_F2 
+    alter table tc_Order_Items add constraint tc_Order_Items_F2
     foreign key (Product_ID)
     references tc_Products(Row_GUID)
     disable
@@ -2367,7 +2367,7 @@ The tasks you will accomplish in this step are:
 
     create table tc_List_Of_Values
     sharing = data
-    (Row_GUID    raw(16)        default Sys_GUID() primary key 
+    (Row_GUID    raw(16)        default Sys_GUID() primary key
     ,Type_Code   varchar2(30)   not null
     ,Value_Code  varchar2(30)   not null
     )
@@ -2491,7 +2491,7 @@ The tasks you will accomplish in this step are:
     ````
     <copy>
     connect Terminal_Admin/oracle@localhost:1523/Terminal_Master
-    column c1 format a30     heading "Airport" 
+    column c1 format a30     heading "Airport"
     column c2 format a30     heading "Kiosk"
     column c3 format 999,999 heading "Num Orders"
 
@@ -2524,4 +2524,3 @@ The tasks you will accomplish in this step are:
 - **Author** - Patrick Wheeler, VP, Multitenant Product Management
 - **Adapted to Cloud by** -  David Start, OSPA
 - **Last Updated By/Date** - Anoosha Pilli, Product Manager, DB Product Management, April 2020
-
