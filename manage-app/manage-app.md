@@ -6,6 +6,8 @@ Within an application container, an application is the named, versioned set of c
 
 In this context of an application container, the term “application” means “master application definition.” For example, the application might include definitions of tables, views, and packages.
 
+Watch the video below for an overview of Oracle Application Container.
+
 [](youtube:ZPOjjF3kCvo)
 
 An application container is an optional, user-created CDB component that stores data and metadata for one or more application back ends. A CDB includes zero or more application containers.
@@ -529,7 +531,7 @@ The following table shows the types of application common objects, and where the
 
 
 
-23. *** select data in app pdb insert and verify ***
+23. Select data in app pdb, insert and verify
 
 ````
 <copy>
@@ -539,7 +541,7 @@ select * from app_common.T_METADATA;
 </copy>
 ````
 
-24. ***As a last step, try to delete the record with ID=1 . This data was inserted from APP\_ROOT***
+24. As a last step, try to delete the record with ID=1 . This data was inserted from APP\_ROOT
 
 ````
 <copy>
@@ -657,9 +659,9 @@ The benefit of a Proxy PDB is that it’s exactly as if the referenced PDB was i
 
 ````
 <copy>
-conn sys/oracle@//localhost:1523/cdb1 as sysdba
+conn sys/oracle@localhost:1523/cdb1 as sysdba
 show pdbs
-conn sys/oracle@//localhost:1523/pdb1 as sysdba
+conn sys/oracle@localhost:1523/pdb1 as sysdba
 ALTER PLUGGABLE DATABASE CONTAINERS PORT=1523;
 create table proxy_test (id number , name varchar2(15));
 insert into proxy_test values (1,'in PDB1');
@@ -667,7 +669,7 @@ commit;
 select * from proxy_test ;
 </copy>
 
-SQL>  conn sys/oracle@//localhost:1523/cdb1 as sysdba
+SQL>  conn sys/oracle@localhost:1523/cdb1 as sysdba
 Connected.
 SQL> show pdbs
     CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -678,7 +680,7 @@ SQL> show pdbs
          5 APP_ROOT                       READ WRITE NO
          7 F3345058508_3_1                READ WRITE NO
 
-SQL> conn sys/oracle@//localhost:1523/pdb1 as sysdba
+SQL> conn sys/oracle@localhost:1523/pdb1 as sysdba
 Connected.
 SQL> ALTER PLUGGABLE DATABASE CONTAINERS PORT=1523;
 Pluggable database altered.
@@ -700,20 +702,20 @@ SQL> select * from proxy_test ;
 
 ````
 <copy>
-conn sys/oracle@//localhost:1524/cdb2 as sysdba
+conn sys/oracle@localhost:1524/cdb2 as sysdba
 show pdbs
 drop database link cdb1_link ;
- create database link cdb1_link connect to system identified by oracle using '//localhost:1523/cdb1';
+ create database link cdb1_link connect to system identified by oracle using '@localhost:1523/cdb1';
 CREATE PLUGGABLE DATABASE PDB1_PROXY AS PROXY FROM PDB1@CDB1_LINK;
 ALTER PLUGGABLE DATABASE PDB1_PROXY OPEN;
 show pdbs
-conn sys/oracle@//localhost:1524/pdb1_proxy as sysdba
+conn sys/oracle@localhost:1524/pdb1_proxy as sysdba
 insert into proxy_test values (2,'IN PDB1_PROXY') ;
 commit;
 select * from proxy_test;
 </copy>
 
-SQL> conn sys/oracle@//localhost:1524/cdb2 as sysdba
+SQL> conn sys/oracle@localhost:1524/cdb2 as sysdba
 Connected.
 SQL> show pdbs
     CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -722,7 +724,7 @@ SQL> show pdbs
           3 PDB2                           READ WRITE NO
 SQL> drop database link cdb1_link ;
 Database link dropped.
-SQL>  create database link cdb1_link connect to system identified by oracle using '//localhost:1523/cdb1';
+SQL>  create database link cdb1_link connect to system identified by oracle using '@localhost:1523/cdb1';
 Database link created.
 SQL> CREATE PLUGGABLE DATABASE PDB1_PROXY AS PROXY FROM PDB1@CDB1_LINK;
 Pluggable database created.
@@ -735,7 +737,7 @@ SQL> show pdbs
           3 PDB2                           READ WRITE NO
           5 PDB1_PROXY                     READ WRITE NO
 
-SQL> conn sys/oracle@//localhost:1524/pdb1_proxy as sysdba
+SQL> conn sys/oracle@localhost:1524/pdb1_proxy as sysdba
 Connected.
 SQL> insert into proxy_test values (2,'IN PDB1_PROXY') ;
 1 row created.
@@ -753,7 +755,7 @@ SQL> select * from proxy_test;
 
 ````
 <copy>
-conn sys/oracle@//localhost:1523/pdb1 as sysdba
+conn sys/oracle@localhost:1523/pdb1 as sysdba
 select * from proxy_test;
 </copy>
 ````
@@ -776,20 +778,20 @@ A good scenario is hosting a multi tenant Application environment where each ten
 
 ````
 <copy>
-conn sys/oracle@//localhost:1523/cdb1 as sysdba
+conn sys/oracle@localhost:1523/cdb1 as sysdba
 show pdbs
-conn  sys/oracle@//localhost:1523/APP_ROOT as sysdba
+conn  sys/oracle@localhost:1523/APP_ROOT as sysdba
 show pdbs
 create PLUGGABLE DATABASE APP_PDB2 ADMIN USER admin IDENTIFIED BY admin ;
 alter pluggable database APP_PDB2 open;
 show pdbs
-conn sys/oracle@//localhost:1523/APP_PDB2 as sysdba
+conn sys/oracle@localhost:1523/APP_PDB2 as sysdba
 alter pluggable database application APP01 sync;
 insert into app_common.T_METADATA values (2222);
 commit;
 </copy>
 
-SQL>  conn sys/oracle@//localhost:1523/cdb1 as sysdba
+SQL>  conn sys/oracle@localhost:1523/cdb1 as sysdba
 Connected.
 SQL> show pdbs
     CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -799,7 +801,7 @@ SQL> show pdbs
          4 APP_PDB1                       READ WRITE NO
          5 APP_ROOT                       READ WRITE NO
          7 F3345058508_3_1                READ WRITE NO
-SQL>  conn  sys/oracle@//localhost:1523/APP_ROOT as sysdba
+SQL>  conn  sys/oracle@localhost:1523/APP_ROOT as sysdba
 Connected.
 SQL> show pdbs
     CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -818,7 +820,7 @@ SQL>
          4 APP_PDB1                       READ WRITE NO
          5 APP_ROOT                       READ WRITE NO
          6 APP_PDB2                       READ WRITE NO
-SQL> conn sys/oracle@//localhost:1523/APP_PDB2 as sysdba
+SQL> conn sys/oracle@localhost:1523/APP_PDB2 as sysdba
 Connected.
 
 SQL> alter pluggable database application APP01 SYNC;
@@ -829,10 +831,10 @@ SQL> commit;
 Commit complete.
 ````
 
-31. Now APP01 Application in APP\_ROOT has been SYNCed with APP\_PDB1 and APP_PDB2 . You can now run the sql CONTAINER query to see the data  inserted after SYNCing.
+31. Now APP01 Application in APP\_ROOT has been synced with APP\_PDB1 and APP_PDB2 . You can now run the sql CONTAINER query to see the data  inserted after syncing.
 
 ```
-conn  sys/oracle@//localhost:1523/APP_ROOT as sysdba
+conn  sys/oracle@localhost:1523/APP_ROOT as sysdba
 select  con$name, A.*  FROM  containers(app_common.T_METADATA) A ;
 ```
 
@@ -846,7 +848,7 @@ select  con$name, A.*  FROM  containers(app_common.T_METADATA) A ;
 
 ````
 <copy>
-conn sys/oracle@//localhost:1524/cdb2 as sysdba
+conn sys/oracle@localhost:1524/cdb2 as sysdba
 Drop PUBLIC database link CDB1_Link;
 create PUBLIC database link CDB1_Link
 connect to system identified by oracle
@@ -860,7 +862,7 @@ show pdbs
 </copy>
 
 
-SQL> conn sys/oracle@//localhost:1524/cdb2 as sysdba
+SQL> conn sys/oracle@localhost:1524/cdb2 as sysdba
 Connected.
 
 SQL> Drop PUBLIC database link CDB1_Link;
@@ -903,17 +905,17 @@ Now, APP\_ROOT\_REPLICA is a ROOT CONTAINER in Container database CDB2.  This CD
 
 ````
 <copy>
-conn sys/oracle@//localhost:1524/APP_ROOT_REPLICA as sysdba
+conn sys/oracle@localhost:1524/APP_ROOT_REPLICA as sysdba
 create pluggable database APP_PDB3  admin user admin identified by admin;
 alter pluggable database APP_PDB3 open;
 show pdbs
-conn sys/oracle@//localhost:1524/APP_PDB3 as sysdba
+conn sys/oracle@localhost:1524/APP_PDB3 as sysdba
 alter pluggable database application APP01 SYNC;
 insert into app_common.T_METADATA values (3333);
 commit;
 </copy>
 
-SQL> conn sys/oracle@//localhost:1524/APP_ROOT_REPLICA as sysdba
+SQL> conn sys/oracle@localhost:1524/APP_ROOT_REPLICA as sysdba
 Connected.
 SQL> create pluggable database APP_PDB3  admin user admin identified by admin;
 Pluggable database created.
@@ -925,7 +927,7 @@ SQL> show pdbs
 ---------- ------------------------------ ---------- ----------
          4 APP_ROOT_REPLICA               READ WRITE NO
          6 APP_PDB3                       READ WRITE NO
-SQL> conn sys/oracle@//localhost:1524/APP_PDB3 as sysdba
+SQL> conn sys/oracle@localhost:1524/APP_PDB3 as sysdba
 Connected.
  -- SYNC  the application APP01 which create the t_metadata table and app_common user.
 SQL>  alter pluggable database application APP01 SYNC;
@@ -941,11 +943,11 @@ Commit complete.
 
 ````
 <copy>
-conn sys/oracle@//localhost:1524/APP_ROOT_REPLICA as sysdba;
+conn sys/oracle@localhost:1524/APP_ROOT_REPLICA as sysdba;
 select  con$name, A.*  FROM  containers(app_common.T_METADATA) A ;
 </copy>
 
-SQL> conn sys/oracle@//localhost:1524/APP_ROOT_REPLICA as sysdba;
+SQL> conn sys/oracle@localhost:1524/APP_ROOT_REPLICA as sysdba;
 Connected.
 SQL> select  con$name, A.*  FROM  containers(app_common.T_METADATA) A ;
 CON$NAME                                 ID     CON_ID
@@ -966,28 +968,28 @@ Now, by creating a Proxy PDB for APP\_ROOT\_REPLICA (in CDB2) in  APP\_ROOT ( in
 
 ````
 <copy>
-conn  sys/oracle@//localhost:1524/CDB2 as sysdba
+conn  sys/oracle@localhost:1524/CDB2 as sysdba
 select * from  v$proxy_pdb_targets;
-conn  sys/oracle@//localhost:1524/APP_ROOT_REPLICA as sysdba
+conn  sys/oracle@localhost:1524/APP_ROOT_REPLICA as sysdba
 alter pluggable database containers port=1524;
-conn  sys/oracle@//localhost:1524/APP_PDB3 as sysdba
+conn  sys/oracle@localhost:1524/APP_PDB3 as sysdba
 alter pluggable database containers port=1524;
-conn  sys/oracle@//localhost:1524/CDB2 as sysdba
+conn  sys/oracle@localhost:1524/CDB2 as sysdba
 select * from  v$proxy_pdb_targets;
 </copy>
 ````
 
 
 
-36. Create ProxyPDB ARR_PROXY in APP\_ROOT(in CDB1) for APP\_ROOT\_REPLICA (in CDB2)
+36. Create ProxyPDB ARR\_PROXY in APP\_ROOT(in CDB1) for APP\_ROOT\_REPLICA (in CDB2)
 
 
 
 ````
 <copy>
-conn sys/oracle@//localhost:1523/APP_ROOT as sysdba
+conn sys/oracle@localhost:1523/APP_ROOT as sysdba
 show pdbs
-Create database link cdb2_link connect to system identified by oracle using '//localhost:1524/cdb2'  ;
+Create database link cdb2_link connect to system identified by oracle using '@localhost:1524/cdb2'  ;
 
  create PLUGGABLE DATABASE ARR_PROXY
  as proxy
@@ -1033,45 +1035,45 @@ Now we can apply a patch or upgrade the Master APP\_ROOT,  the data will be dist
 
 We will
 
-- **Upgrade APP01** from 2.0 to 20.0 In APP_ROOT
+- **Upgrade APP01** from 2.0 to 20.0 in APP\_ROOT
 
-- **SYNC**  local App pdbs APP_PDB1 and APP_PDB2.
+- **SYNC**  local App pdbs APP_PDB1 and APP\_PDB2.
 
 37. Connect to ARR_PROXY &  SYNC and verify that the APP01 changes are push from APP_ROOT to APP\_ROOT\_REPLICA
 
 ````
 <copy>
-conn sys/oracle@//localhost:1523/APP_ROOT as sysdba
+conn sys/oracle@localhost:1523/APP_ROOT as sysdba
 ALTER PLUGGABLE DATABASE APPLICATION APP01 BEGIN UPGRADE '2.0' to '20.0';
 create table app_common.T_METADATA2 ( name varchar2(20));
 insert into  app_common.T_METADATA2 values ( 'in_cdb1-app_root');
 ALTER PLUGGABLE DATABASE APPLICATION APP01  END UPGRADE;
 
---upgrage APP_PDB1
+--upgrade APP_PDB1
 alter session set container=APP_PDB1;
 alter  pluggable database application app01 sync ;
 
---upgrage APP_PDB2
+--upgrade APP_PDB2
 alter session set container=APP_PDB2;
 alter  pluggable database application app01 sync ;
 
 -- TO connect to proxy PDBs, alter session is not supported.
- conn sys/oracle@//localhost:1523/ARR_PROXY as sysdba
--- Executing SYNC in ARR_PROXY will upgrage APP_ROOT_RELICA in CDB2
+ conn sys/oracle@localhost:1523/ARR_PROXY as sysdba
+-- Executing SYNC in ARR_PROXY will upgrade APP_ROOT_RELICA in CDB2
  alter  pluggable database application app01 sync ;
 
 --Verify that the upgrade is reflected.
-conn sys/oracle@//localhost:1524/APP_ROOT_REPLICA as sysdba;
+conn sys/oracle@localhost:1524/APP_ROOT_REPLICA as sysdba;
  select * from  app_common.T_METADATA2 ;
 </copy>
 
 
-SQL>  conn sys/oracle@//localhost:1523/ARR_PROXY as sysdba
+SQL>  conn sys/oracle@localhost:1523/ARR_PROXY as sysdba
 Connected.
 SQL>  alter  pluggable database application app01 sync ;
 Pluggable database altered.
 
-SQL>  conn sys/oracle@//localhost:1524/APP_ROOT_REPLICA as sysdba;
+SQL>  conn sys/oracle@localhost:1524/APP_ROOT_REPLICA as sysdba;
 Connected.
 SQL> select * from  app_common.T_METADATA2 ;
 NAME
@@ -1094,7 +1096,7 @@ APP PDBs can run different versions of Application , Combining this with the abi
 
 ````
 <copy>
-conn sys/oracle@//localhost:1523/APP_ROOT as sysdba
+conn sys/oracle@localhost:1523/APP_ROOT as sysdba
 select * from containers(dba_pplications) select  cdb$name,con$name, APP_NAME , APP_VERSIOn,CON_ID from containers(dba_applications);
 </copy>
 
@@ -1102,8 +1104,8 @@ SQL> select  cdb$name,  con$name, APP_NAME, max(to_number(app_version)) from con
 
 CDB$NAME   CON$NAME             Application Name     APP_VERSION
 ---------- -------------------- -------------------- ---------------------------
-CDB2       APP_ROOT_REPLICA     APP\$A11520423FDE4299                           1
-CDB1       APP_ROOT             APP\$A09DFC8718454C97                           1
+CDB2       APP_ROOT_REPLICA     APP$A11520423FDE4299                           1
+CDB1       APP_ROOT             APP$A09DFC8718454C97                           1
 CDB2       APP_PDB3             APP01                                          2
 CDB2       APP_ROOT_REPLICA     APP01                                         20
 CDB1       APP_ROOT             APP01                                         20
@@ -1123,12 +1125,12 @@ Another import feature to remember is that the PATCHES applied between upgrades 
 
 ````
 <copy>
-conn sys/oracle@//localhost:1524/app_pdb3 as sysdba
+conn sys/oracle@localhost:1524/app_pdb3 as sysdba
 col DESCRIPTION format a20
 select * from app_test.mytable;
 </copy>
 
-SQL> conn sys/oracle@//localhost:1524/app_pdb3 as sysdba
+SQL> conn sys/oracle@localhost:1524/app_pdb3 as sysdba
 Connected.
 SQL> col DESCRIPTION format a20
 select * from app_test.mytable;SQL>
@@ -1154,20 +1156,20 @@ In CDB1, we have application  upgrade from 1.0 to 2.0 and from 2.0 to 20.0 ..
 
 ````
 <copy>
-conn sys/oracle@//localhost:1523/CDB1 as sysdba
+conn sys/oracle@localhost:1523/CDB1 as sysdba
 show pdbs
 alter session set container=APP_ROOT;
 alter PLUGGABLE DATABASE APPLICATION APP01 SET COMPATIBILITY VERSION '2.0';
-conn sys/oracle@//localhost:1523/CDB1 as sysdba
+conn sys/oracle@localhost:1523/CDB1 as sysdba
 show pdbs
 </copy>
 
-SQL> conn sys/oracle@//localhost:1523/CDB1 as sysdba
+SQL> conn sys/oracle@localhost:1523/CDB1 as sysdba
 Connected.
 SQL> show pdbs
     CON_ID CON_NAME                       OPEN MODE  RESTRICTED
 ---------- ------------------------------ ---------- ----------
-         2 PDB\$SEED                       READ ONLY  NO
+         2 PDB$SEED                       READ ONLY  NO
          3 PDB1                           READ WRITE NO
          4 APP_PDB1                       READ WRITE NO
          5 APP_ROOT                       READ WRITE NO
@@ -1182,7 +1184,7 @@ Session altered.
 SQL> alter PLUGGABLE DATABASE APPLICATION APP01 SET  COMPATIBILITY VERSION '2.0';
 Pluggable database altered.
 
-SQL> conn sys/oracle@//localhost:1523/CDB1 as sysdba
+SQL> conn sys/oracle@localhost:1523/CDB1 as sysdba
 Connected.
 SQL> show pdbs
     CON_ID CON_NAME                       OPEN MODE  RESTRICTED
@@ -1198,4 +1200,4 @@ SQL> show pdbs
 
 
 
-Note that one of the APP ROOT CLONE F3345058508\_3\_1 is deleted as we set the compatibility to 2.0. So, any App Pdbs created further will inherit all the changes from  1.0 version and 1.1 Patch and 2.0 changes when SYNCed.
+Note that one of the APP ROOT CLONE F3345058508\_3\_1 is deleted as we set the compatibility to 2.0. So, any App Pdbs created further will inherit all the changes from  1.0 version and 1.1 Patch and 2.0 changes when synced.
