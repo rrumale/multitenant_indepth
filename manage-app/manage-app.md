@@ -1201,3 +1201,10 @@ SQL> show pdbs
 
 
 Note that one of the APP ROOT CLONE F3345058508\_3\_1 is deleted as we set the compatibility to 2.0. So, any App Pdbs created further will inherit all the changes from  1.0 version and 1.1 Patch and 2.0 changes when synced.
+
+
+## Acknowledgements
+
+- **Author** - Patrick Wheeler, Vijay Balebail
+- **Contributors** -  David Start, Anoosha Pilli, Brian McGraw, Quintin Hill, Rene Fontcha, Rajeev Rumale
+- **Last Updated By/Date** - Vijay Balebail, July 2021
