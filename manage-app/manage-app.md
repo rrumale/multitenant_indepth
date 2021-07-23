@@ -770,7 +770,7 @@ A good scenario is hosting a multi tenant Application environment where each ten
 
 
 
-![](../images/MT03_RR.png)
+![](images/MT03_RR.png)
 
 
 
