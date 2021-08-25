@@ -770,7 +770,7 @@ A good scenario is hosting a multi tenant Application environment where each ten
 
 
 
-![](../images/MT03_RR.png)
+![](images/MT03_RR.png)
 
 
 
@@ -1206,5 +1206,5 @@ Note that one of the APP ROOT CLONE F3345058508\_3\_1 is deleted as we set the c
 ## Acknowledgements
 
 - **Author** - Patrick Wheeler, Vijay Balebail
-- **Contributors** -  David Start, Anoosha Pilli, Brian McGraw, Quintin Hill, Rene Fontcha, Rajeev Rumale
+- **Contributors** -  Rajeev Rumale, Robert Mackowiak
 - **Last Updated By/Date** - Vijay Balebail, July 2021
