@@ -19,15 +19,7 @@ This lab assumes you have:
 
 ## Task 1: Connect to Your Instance and Login
 
-This Lab assumes that you have already Initialized your environment as instructed in "*Lab: Clone, Plug and Drop*". If you haven't please return to that lab and execute "*Step 0*" at the minimum.
-
-1. If you've disconnected from the session you established while running the previous lab, please reconnect to your instance as user "*opc*"
-
-    ```
-    ssh -i ~/.ssh/<sshkeyname> opc@<Your Compute Instance Public IP Address>
-    ```
-
-2. Then, login using the following commands:
+1. Login using the following commands:
     ```
     <copy>
     sudo su - oracle
