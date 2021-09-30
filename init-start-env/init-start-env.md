@@ -10,8 +10,8 @@ This lab will show you how to access the Lab environment and validate successful
 
 ### Prerequisites
 This lab assumes you have:
-- a Livelabs hosted workshop in Oracle Cloud.
-- you have a desktop and a browser
+- A Livelabs hosted workshop in Oracle Cloud.
+- You have a desktop and a browser
 
 ## Task 1: Access the Graphical Remote Desktop (Preferred)
 For ease of execution of this workshop, your VM instance has been pre-configured with a remote graphical desktop accessible using any modern browser on your laptop or workstation. Proceed as detailed below to login.
@@ -35,7 +35,7 @@ During the execution of your labs you may need to copy text from your local PC/M
 2. Select the *clipboard* icon, Copy the sample text below and paste into the clipboard widget, then finally open up the desired application and paste accordingly using *mouse controls*
 
     ```
-    <copy>echo "This text was copied from my local computer"</copy>
+		 <copy>echo "This text was copied from my local computer"</copy>
     ```
 
     ![](./images/novnc-clipboard-2.png " ")
