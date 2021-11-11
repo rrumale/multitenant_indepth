@@ -169,8 +169,8 @@ This section looks at how to create a new PDB. You will create a pluggable datab
 
     ![](./images/step1.9-containers.png " ")
 
-## Task 3: Clone a PDB
-This section looks at how to clone a PDB.
+## Task 3: Hot Clone PDB
+This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant feature was introduced, we had to change source PDB to READ ONLY mode to clone. However, since 12.2, you can clone a PDB  when the source is open in READ WRITE mode. This feature is also called HOT clone.
 
 The tasks you will accomplish in this step are:
 - Clone a pluggable database **PDB2** into **PDB3**
@@ -187,18 +187,8 @@ The tasks you will accomplish in this step are:
     <copy>connect sys/oracle@localhost:1523/cdb1 as sysdba</copy>
     ```
 
-2. Change the pluggable database **PDB2** to read only.
 
-    ```
-    <copy>alter pluggable database PDB2 open read only force;
-    show pdbs</copy>
-    ```
-
-   ![](./images/alterplug.png " ")
-
-   ![](./images/showpdbs.png " ")
-
-3. Create a pluggable database **PDB3** from the read only database **PDB2**.
+2. Create a pluggable database **PDB3** from  **PDB2**.
 
     ```
     <copy>create pluggable database PDB3 from PDB2;
@@ -210,22 +200,19 @@ The tasks you will accomplish in this step are:
     ```
     <copy>show pdbs</copy>
     ```
+    ```
+    SQL> show pdbs
 
-   ![](./images/createpdb3.png " ")
-
-4. Change **PDB2** back to read write.
+    CON_ID      CON_NAME		OPEN MODE  RESTRICTED
+    ---------- ----------- ---------- ----------
+        	 2   PDB$SEED			READ ONLY  NO
+        	 3   PDB1 			  READ WRITE NO
+        	 4   PDB2 			  READ WRITE NO
+        	 5   PDB3 			  READ WRITE NO
 
     ```
-    <copy>alter pluggable database PDB2 open read write force;</copy>
-    ```
 
-    ```
-    <copy>show pdbs</copy>
-    ```
-
-   ![](./images/pdb2write.png " ")
-
-5. Connect to **PDB2** and show the table **MY_TAB**.
+4. Connect to **PDB2** and show the table **MY_TAB**.
 
     ```
     <copy>connect pdb_admin/oracle@localhost:1523/pdb2</copy>
@@ -237,7 +224,7 @@ The tasks you will accomplish in this step are:
 
    ![](./images/pdb2mytab.png " ")
 
-6. Connect to **PDB3** and show the table **MY_TAB**.
+5. Connect to **PDB3** and show the table **MY_TAB**.
 
     ```
     <copy>connect pdb_admin/oracle@localhost:1523/pdb3</copy>
@@ -528,19 +515,7 @@ The tasks you will accomplish in this step are:
     <copy>connect sys/oracle@localhost:1523/cdb1 as sysdba</copy>
     ```
 
-2. Change **PDB2** to read only.
-
-    ```
-    <copy>alter pluggable database PDB2 open read only force;</copy>
-    ```
-
-    ```
-    <copy>show pdbs</copy>
-    ```
-
-    ![](./images/step6.2-pdbreadonly.png " ")
-
-3. Create a pluggable database **GOLDPDB** from the read only database **PDB2**.
+2. Create a pluggable database **GOLDPDB** from the read only database **PDB2**.
 
     ```
     <copy>create pluggable database GOLDPDB from PDB2;</copy>
@@ -554,19 +529,24 @@ The tasks you will accomplish in this step are:
     <copy>show pdbs</copy>
     ```
 
-    ![](./images/step6.3-goldpdb.png " ")
-
-4. Change **PDB2** back to read write.
-
     ```
-    <copy>alter pluggable database PDB2 open read write force;</copy>
-    ```
+    SQL> create pluggable database GOLDPDB from PDB2;
 
-    ```
-    <copy>show pdbs</copy>
-    ```
+    Pluggable database created.
 
-    ![](./images/step6.4-mountgoldpdb.png " ")
+    SQL> alter pluggable database GOLDPDB open force;
+
+    Pluggable database altered.
+
+    SQL> show pdbs
+
+        CON_ID CON_NAME			  OPEN MODE  RESTRICTED
+    ---------- -------------- ---------- ----------
+    	 2       PDB$SEED			   READ ONLY  NO
+    	 3       PDB1 			     READ WRITE NO
+    	 5       PDB2 			     READ WRITE NO
+    	 6       GOLDPDB			   READ WRITE NO
+    ```
 
 5. Unplug **GOLDPDB** from **CDB1**.
 
@@ -685,13 +665,14 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step6.12-guid.png " ")
 
-## Task 8: PDB Hot Clones
+## Task 8: Remote Clone & Snapshot Clone PDB
 This section looks at how to hot clone a pluggable database.
 
 The tasks you will accomplish in this step are:
 - Create a pluggable database **OE** in the container database **CDB1**
 - Create a load against the pluggable database **OE**
-- Create a hot clone **OE_DEV** in the container database **CDB2** from the pluggable database **OE**
+- Create a remote READ ONLY clone **OE_DEV** in the container database **CDB2** from the pluggable database **OE**
+- Create a snapshot clone from **OE_DEV**. Open the snapshot clone and do DML operations.
 
 [](youtube:djp-ogM71oE)
 
@@ -772,7 +753,7 @@ The tasks you will accomplish in this step are:
 
     Leave this window open and running for the next few steps in this lab.
 
-5. Go back to your original terminal window.  Connect to **CDB2** and create the pluggable **OE\_DEV** from the database link **oe@cdb1\_link**.
+5. Go back to your original terminal window.  Connect to **CDB2** and create the **REMOTE CLONE**  **OE\_DEV** from the database link **oe@cdb1\_link**.
 
     ```
     <copy>connect sys/oracle@localhost:1524/cdb2 as sysdba</copy>
@@ -786,8 +767,19 @@ The tasks you will accomplish in this step are:
     <copy>alter pluggable database oe_dev open;</copy>
     ```
 
+
     ![](./images/step7.5-createoedev.png " ")
 
+6. Verify the remote DB link is pointing to CDB1.
+
+   ```
+   <copy>
+   set linewidth 180
+   column owner format A13
+   column db_link format 6
+   select owner,db_link,host from dba_db_links;
+   </copy>
+   ```
 6. Connect as **SOE** to **OE\_DEV** and check the number of records in the **sale\_orders** table.
 
     ```
