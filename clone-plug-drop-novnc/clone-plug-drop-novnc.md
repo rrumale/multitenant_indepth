@@ -749,7 +749,7 @@ The tasks you will accomplish in this step are:
     <copy>./write-load.sh</copy>
     ```
 
-    ![](./images/step7.4-writeloadscript.png " ")
+
 
     Leave this window open and running for the next few steps in this lab.
 
@@ -772,14 +772,15 @@ The tasks you will accomplish in this step are:
 
 6. Verify the remote DB link is pointing to CDB1.
 
-   ```
-   <copy>
-   set linewidth 180
-   column owner format A13
-   column db_link format 6
-   select owner,db_link,host from dba_db_links;
-   </copy>
-   ```
+       ```
+       <copy>
+       set linewidth 180
+       set pages 100
+       column owner format A13
+       column db_link format A6
+       select owner,db_link,host from dba_db_links;
+       </copy>
+       ```
 6. Connect as **SOE** to **OE\_DEV** and check the number of records in the **sale\_orders** table.
 
     ```
@@ -804,7 +805,7 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step7.7-checkrecordsoe.png " ")
 
-8. Close and remove the **OE_DEV** pluggable database.
+8. Open **OE_DEV** pluggable database READ ONLY mode and create a snapshot.
 
     ```
     <copy>connect sys/oracle@localhost:1524/cdb2 as sysdba</copy>
