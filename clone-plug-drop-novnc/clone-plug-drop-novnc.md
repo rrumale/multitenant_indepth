@@ -170,7 +170,7 @@ This section looks at how to create a new PDB. You will create a pluggable datab
     ![](./images/step1.9-containers.png " ")
 
 ## Task 3: Hot Clone PDB
-This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant feature was introduced, we had to change source PDB to READ ONLY mode to clone. However, since 12.2, you can clone a PDB  when the source is open in READ WRITE mode. This feature is also called HOT clone.
+This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant feature was introduced, we had to change source PDB to READ ONLY mode to clone. However, since 12.2, you can clone a PDB  when the source is open in READ WRITE mode. This feature is also called HOT clone. This feature does NOT need NOARCHIVELOG mode to be enabled.
 
 The tasks you will accomplish in this step are:
 - Clone a pluggable database **PDB2** into **PDB3**
@@ -805,6 +805,8 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step7.7-checkrecordsoe.png " ")
 
+     While DML operations are going on in source PDB, We could create a remore clone. Note that both source and target CDBs are in NOARCHIVE LOG mode.
+
 8. Open **OE_DEV** pluggable database READ ONLY mode and create a snapshot.
 
     ```
@@ -812,18 +814,31 @@ The tasks you will accomplish in this step are:
     ```
 
     ```
-    <copy>alter pluggable database oe_dev close;</copy>
+    <copy>alter pluggable database oe_dev open read only force;</copy>
     ```
 
     ```
-    <copy>drop pluggable database oe_dev including datafiles;</copy>
+    <copy>create pluggable database oe_snap from OE_DEV snapshot copy;
+          alter pluggable database oe_snap open;  </copy>
     ```
 
-    ![](./images/step7.8-closeoedev.png " ")
+9. Connect to SOE user in the **OE_SMAP** pdb and perform DML operations.
+
+    ```
+    <copy>connect soe/soe@localhost:1524/oe_snap</copy>
+    ```
+
+    ```
+    <copy>select count(*) from sale_orders;
+          insert into sale_orders select * from sale_orders;
+          commit;
+          select coun(*) from sale_orders;</copy>
+    ```
+
+
 
 9. Leave the **OE** pluggable database open with the load running against it for the rest of the steps in this lab.
 
-You can see that the clone of the pluggable database worked without having to stop the load on the source database. In the next step, you will look at how to refresh a clone.
 
 ## Task 9: PDB Refresh
 This section looks at how to hot clone a pluggable database, open it for read only and then refresh the database.
@@ -979,6 +994,7 @@ The tasks you will accomplish in this step are:
     ```
     <copy>conn sys/oracle@localhost:1523/cdb2 as sysdba</copy>
     ```
+This feature is also called
 
     ```
     <copy>alter pluggable database oe close;</copy>
