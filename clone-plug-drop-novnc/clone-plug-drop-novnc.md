@@ -175,18 +175,22 @@ This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant featur
 The tasks you will accomplish in this step are:
 - Clone a pluggable database **PDB2** into **PDB3**
 
-1. Start SQLPLUS if you aren't already in a SQLPLUS session.
-
-    ```
-    <copy>sqlplus /nolog </copy>
-
-    ```
 1. Connect to the container **CDB1**.
 
     ```
     <copy>connect sys/oracle@localhost:1523/cdb1 as sysdba</copy>
     ```
+2. Verify that Archiving is Disabled.
+    ```
+    <copy>archive log list</copy>
+    SQL> archive log list
+    Database log mode	         No Archive Mode
+    Automatic archival	       Disabled
+    Archive destination	       /u01/app/oracle/product/19c/dbhome_1/dbs/arch
+    Oldest online log sequence     83
+    Current log sequence	         85
 
+    ```
 
 2. Create a pluggable database **PDB3** from  **PDB2**.
 
