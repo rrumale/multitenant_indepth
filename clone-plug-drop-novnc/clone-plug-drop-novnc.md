@@ -680,11 +680,7 @@ The tasks you will accomplish in this step are:
 
 [](youtube:djp-ogM71oE)
 
-1. Start SQLPLUS if you aren't already in a SQLPLUS session.
 
-    ```
-    <copy>sqlplus /nolog </copy>
-    ```
 1. Connect to the container **CDB1**.
     ```
     <copy>connect sys/oracle@localhost:1523/cdb1 as sysdba</copy>
@@ -705,11 +701,8 @@ The tasks you will accomplish in this step are:
     ```
 
     ```
-    <copy>grant create session, create table to soe;</copy>
-    ```
-
-    ```
-    <copy>alter user soe quota unlimited on system;</copy>
+    <copy>grant create session, create table to soe;
+          alter user soe quota unlimited on system;</copy>
     ```
 
     ![](./images/oe.png " ")
