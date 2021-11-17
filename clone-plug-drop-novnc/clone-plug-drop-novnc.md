@@ -729,17 +729,6 @@ The tasks you will accomplish in this step are:
 
  4. Open a new terminal window, login into your instance, sudo to the oracle user, and execute write-load.sh. Leave this window open and running throughout for the rest of this lab.
 
-    ```
-    <copy>cd .ssh</copy>
-    ```
-
-    ```
-    <copy>ssh -i ~/.ssh/sshkeyname opc@Your Compute Instance Public IP Address</copy>
-    ```
-
-    ```
-    <copy>sudo su - oracle</copy>
-    ```
 
     ```
     <copy>cd /home/oracle/labs/multitenant</copy>
