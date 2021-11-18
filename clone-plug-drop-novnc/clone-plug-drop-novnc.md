@@ -669,7 +669,7 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step6.12-guid.png " ")
 
-## Task 8: Remote Clone & Snapshot Clone PDB
+## Task 8: Remote Clone
 This section looks at how to hot clone a pluggable database.
 
 The tasks you will accomplish in this step are:
@@ -793,7 +793,17 @@ The tasks you will accomplish in this step are:
 
      While DML operations are going on in source PDB, We could create a remore clone. Note that both source and target CDBs are in NOARCHIVE LOG mode.
 
-8. Open **OE_DEV** pluggable database READ ONLY mode and create a snapshot.
+## Task 9: Snanshot Clone
+  You can create a snapshot copy PDB by executing a CREATE PLUGGABLE DATABASE ... FROM ... **SNAPSHOT COPY** statement.
+
+  A snapshot copy reduces the time required to create the clone because it does not include a complete copy of the source data files. Furthermore, the snapshot copy PDB occupies a fraction of the space of the source PDB.
+
+  A snapshot copy reduces the time required to create the clone because it does not include a complete copy of the source data files. Furthermore, the snapshot copy PDB occupies a fraction of the space of the source PDB. Snapshot copy works in all the Unix
+
+  You need CLONEDB=true and source PDB is open in read-only mode. Oracle Database creates a snapshot copy PDB using copy-on-write technology. The snapshot copy PDB contains sparse files, not full copies.
+  All UNIX systems meet the requirements to create snapshot copy including Oracle ACFS and ZFS.
+
+1. Open **OE_DEV** pluggable database in READ ONLY mode and create a snapshot.
 
     ```
     <copy>connect sys/oracle@localhost:1524/cdb2 as sysdba</copy>
@@ -808,7 +818,7 @@ The tasks you will accomplish in this step are:
           alter pluggable database oe_snap open;  </copy>
     ```
 
-9. Connect to SOE user in the **OE_SMAP** pdb and perform DML operations.
+2. Connect to SOE user in the **OE_SMAP** pdb and perform DML operations.
 
     ```
     <copy>connect soe/soe@localhost:1524/oe_snap</copy>
@@ -820,13 +830,11 @@ The tasks you will accomplish in this step are:
           commit;
           select coun(*) from sale_orders;</copy>
     ```
+    PDB Snapshot Copy is a good way to create test and Dev environments from a production. You can drop the snapshots once the testing is done. You can take a snapshot copy of a refreshable PDB from production to ensure you get the latest dataset to run tests. In the next task, we will learn about refreshable snapshots.
 
 
 
-9. Leave the **OE** pluggable database open with the load running against it for the rest of the steps in this lab.
-
-
-## Task 9: PDB Refresh
+## Task 11: PDB Refresh
 This section looks at how to hot clone a pluggable database, open it for read only and then refresh the database.
 
 [](youtube:L9l7v6dH-e8)
@@ -836,11 +844,10 @@ The tasks you will accomplish in this step are:
 - Create a hot clone **OE_REFRESH**` in the container database **CDB2** from the pluggable database **OE**
 - Refresh the **OE_REFRESH**` pluggable database.
 
-1. Start SQLPLUS if you aren't already in a SQLPLUS session.
 
-    ```
-    <copy>sqlplus /nolog </copy>
-    ```
+1. Leave the **OE** pluggable database open with the load running against it for the rest of the steps in this lab. If the scripts is done running, you can restart the load by executing ./write-load.sh
+
+
 1. Connect to the container **CDB2**.
     ```
     <copy>connect sys/oracle@localhost:1524/cdb2 as sysdba</copy>
