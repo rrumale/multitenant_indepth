@@ -40,9 +40,7 @@ In this lab, we have two CDBs (CDB1 & CDB2) created, and listening on different 
     Connect to CDB1 instance
     ```
     <copy>
-    sqlplus /nolog
-    connect sys/oracle@localhost:1523/cdb1 as sysdba
-    exit
+    sqlplus  sys/oracle@localhost:1523/cdb1 as sysdba
     </copy>
     ```
     Note: SYS and SYSTEM username/password are common across all CDBs and PDBs. If you need a customized Global user across CDBs and PDBs we can create user having username starting with "C##" at the CDB level. i.e., "C##<username>" or C##vijay
