@@ -74,7 +74,7 @@ This section looks at how to create a new PDB. You will create a pluggable datab
     ```
     <copy>show  pdbs;</copy>
     ```
-
+    ![](./images/showpdbsbefore.png " ")
     ```
     <copy>
     create pluggable database PDB2 admin user PDB_Admin identified by oracle;
@@ -85,7 +85,7 @@ This section looks at how to create a new PDB. You will create a pluggable datab
     </copy>
     ```
 
-    ![](./images/showpdbsbefore.png " ")
+
 
     ![](./images/createpdb.png " ")
 
@@ -168,7 +168,7 @@ This section looks at how to create a new PDB. You will create a pluggable datab
     ![](./images/step1.9-containers.png " ")
 
 ## Task 3: Hot Clone PDB
-This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant feature was introduced, we had to change source PDB to READ ONLY mode to clone. However, since 12.2, you can clone a PDB  when the source is open in READ WRITE mode. This feature is also called HOT clone. This feature does NOT need NOARCHIVELOG mode to be enabled.
+This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant feature was introduced, we had to change source PDB to READ ONLY mode to clone. However, since 12.2, we can clone a PDB  when the source is open in READ WRITE mode. This feature is also called HOT clone. Hot Clone relies on reading the online Redolog files and Archivelog files. -- If all the changes are available in the online Redolog files, then Hot cloneing will successed in NOARCHIVELOG mode.
 
 The tasks you will accomplish in this step are:
 - Clone a pluggable database **PDB2** into **PDB3**
