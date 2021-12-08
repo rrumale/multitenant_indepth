@@ -837,7 +837,7 @@ The tasks you will accomplish in this step are:
           commit;
           select count(*) from sale_orders;</copy>
     ```
-    You can refer to the documentation[the documentation](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/cloning-a-pdb.html#GUID-E4EAE488-5371-4B8A-A839-2ADFA7507705) for more information.
+    You can refer to the [documentation](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/cloning-a-pdb.html#GUID-E4EAE488-5371-4B8A-A839-2ADFA7507705) for more information.
     PDB Snapshot Copy is a good way to create test and Dev environments from a production. You can drop the snapshots once the testing is done. You can take a snapshot copy of a refreshable PDB from production to ensure you get the latest dataset to run tests. In the next task, we will learn about refreshable PDBs.
 
 
