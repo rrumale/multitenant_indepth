@@ -673,7 +673,7 @@ This section looks at how to hot clone a pluggable database.
 The tasks you will accomplish in this step are:
 - Create a pluggable database **OE** in the container database **CDB1**
 - Create a load against the pluggable database **OE**
-- Create a remote READ ONLY clone **OE_DEV** in the container database **CDB2** from the pluggable database **OE**
+- Create a remote clone **OE_DEV** in the container database **CDB2** from the pluggable database **OE**
 - Create a snapshot clone from **OE_DEV**. Open the snapshot clone and do DML operations.
 
 [](youtube:djp-ogM71oE)
@@ -873,6 +873,8 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step8.2-createoerefresh.png " ")
 
+    The **OE\_REFRESH** PDB can be refreshed as long as its not open in Read-write mode.
+    
 3. Connect as **SOE** to the pluggable database **OE\_REFRESH** and count the number of records in the **sale\_orders** table.
 
     ```
