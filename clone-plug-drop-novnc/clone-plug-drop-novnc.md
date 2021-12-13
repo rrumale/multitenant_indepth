@@ -5,7 +5,7 @@ Oracle Multitenant enables an Oracle Database to function as a container databas
 
 [](youtube:kzTQGs75IjA)
 
-*Estimated Workshop Time*: 2 hour 
+*Estimated Workshop Time*: 2 hour
 
 ### Objectives
 
@@ -832,7 +832,7 @@ The tasks you will accomplish in this step are:
 
 
 
-## Task 11: PDB Refresh
+## Task 10: PDB Refresh
 This section looks at how to hot clone a pluggable database, open it for read only and then refresh the database.
 
 [](youtube:L9l7v6dH-e8)
@@ -929,7 +929,7 @@ The tasks you will accomplish in this step are:
 
 7. Leave the **OE** pluggable database open with the load running against it for the rest of this lab.
 
-## Task 10: PDB Relocation
+## Task 11: PDB Relocation
 
 This section looks at how to relocate a pluggable database from one container database to another. One important note, either both container databases need to be using the same listener in order for sessions to keep connecting or local and remote listeners need to be setup correctly. For this lab we will change **CDB2** to use the same listener as **CDB1**.
 
