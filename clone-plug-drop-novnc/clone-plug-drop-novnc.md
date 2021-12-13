@@ -673,7 +673,7 @@ This section looks at how to hot clone a pluggable database.
 The tasks you will accomplish in this step are:
 - Create a pluggable database **OE** in the container database **CDB1**
 - Create a load against the pluggable database **OE**
-- Create a remote READ ONLY clone **OE_DEV** in the container database **CDB2** from the pluggable database **OE**
+- Create a remote clone **OE_DEV** in the container database **CDB2** from the pluggable database **OE**
 - Create a snapshot clone from **OE_DEV**. Open the snapshot clone and do DML operations.
 
 [](youtube:djp-ogM71oE)
@@ -764,6 +764,15 @@ The tasks you will accomplish in this step are:
        column db_link format A13
        select owner,db_link,host from dba_db_links;
        </copy>
+       set linewidth 180
+
+        OWNER	      DB_LINK         
+        ------------- -------------
+        HOST
+        --------------------------------------------------------------------------------
+        SYS	      CDB1_LINK
+        (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1523)) (CONN
+        ECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = cdb1)))
        ```
 6. Connect as **SOE** to **OE\_DEV** and check the number of records in the **sale\_orders** table.
 
@@ -789,7 +798,7 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step7.7-checkrecordsoe.png " ")
 
-     While DML operations are going on in source PDB, We could create a remore clone. Note that both source and target CDBs are in NOARCHIVE LOG mode.
+     While DML operations are going on in source PDB, We could create a remote clone. Note that both source and target CDBs are in NOARCHIVE LOG mode.
 
 ## Task 9: Snanshot Clone
   You can create a snapshot copy PDB by executing a CREATE PLUGGABLE DATABASE ... FROM ... **SNAPSHOT COPY** statement.
@@ -816,7 +825,7 @@ The tasks you will accomplish in this step are:
           alter pluggable database oe_snap open;  </copy>
     ```
 
-2. Connect to SOE user in the **OE_SMAP** pdb and perform DML operations.
+2. Connect to SOE user in the **OE_SNAP** pdb and perform DML operations.
 
     ```
     <copy>connect soe/soe@localhost:1524/oe_snap</copy>
@@ -826,9 +835,10 @@ The tasks you will accomplish in this step are:
     <copy>select count(*) from sale_orders;
           insert into sale_orders select * from sale_orders;
           commit;
-          select coun(*) from sale_orders;</copy>
+          select count(*) from sale_orders;</copy>
     ```
-    PDB Snapshot Copy is a good way to create test and Dev environments from a production. You can drop the snapshots once the testing is done. You can take a snapshot copy of a refreshable PDB from production to ensure you get the latest dataset to run tests. In the next task, we will learn about refreshable snapshots.
+    You can refer to the [documentation](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/cloning-a-pdb.html#GUID-E4EAE488-5371-4B8A-A839-2ADFA7507705) for more information.
+    PDB Snapshot Copy is a good way to create test and Dev environments from a production. You can drop the snapshots once the testing is done. You can take a snapshot copy of a refreshable PDB from production to ensure you get the latest dataset to run tests. In the next task, we will learn about refreshable PDBs.
 
 
 
@@ -863,6 +873,8 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step8.2-createoerefresh.png " ")
 
+    The **OE\_REFRESH** PDB can be refreshed as long as its not open in Read-write mode.
+    
 3. Connect as **SOE** to the pluggable database **OE\_REFRESH** and count the number of records in the **sale\_orders** table.
 
     ```
@@ -985,7 +997,6 @@ The tasks you will accomplish in this step are:
     ```
     <copy>conn sys/oracle@localhost:1523/cdb2 as sysdba</copy>
     ```
-This feature is also called
 
     ```
     <copy>alter pluggable database oe close;</copy>
