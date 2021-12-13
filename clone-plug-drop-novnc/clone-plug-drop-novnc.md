@@ -873,8 +873,8 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step8.2-createoerefresh.png " ")
 
-    The **OE\_REFRESH** PDB can be refreshed as long as its not open in Read-write mode.
-    
+    The **OE\_REFRESH** PDB can be refreshed as long as its not open in READ-WRITE mode.
+
 3. Connect as **SOE** to the pluggable database **OE\_REFRESH** and count the number of records in the **sale\_orders** table.
 
     ```
@@ -887,7 +887,7 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step8.3-connectassoe.png " ")
 
-4. Close the pluggable database **OE_REFRESH** and refresh it from the **OE** pluggable database.
+4. Close the pluggable database **OE_REFRESH** to refresh it from the **OE** pluggable database.
 
     ```
     <copy>conn sys/oracle@localhost:1524/oe_refresh as sysdba</copy>
@@ -943,10 +943,11 @@ The tasks you will accomplish in this step are:
 
 ## Task 10: PDB Relocation
 
-This section looks at how to relocate a pluggable database from one container database to another. One important note, either both container databases need to be using the same listener in order for sessions to keep connecting or local and remote listeners need to be setup correctly. For this lab we will change **CDB2** to use the same listener as **CDB1**.
+This section looks at how to relocate a pluggable database from one container database to another. One important note, If both container databases are on the same host, then we need to be using the same listener, then we only change LOCAL_LISTENER. If the the container databases are on two seperate servers, then we need to configure REMOTE_LISTENER.
+For this lab we will change REMOTE_LISTENER for **CDB1** and **CDB2** to point at the other container.
 
 The tasks you will accomplish in this step are:
-- Change **CDB2** to use the same listener as **CDB1**
+- Change REMOTE_LISTER parameter for **CDB1** and  **CDB1**
 - Relocate the pluggable database **OE** from **CDB1** to **CDB2** with the load still running
 - Once **OE** is open the load should continue working.
 
@@ -957,19 +958,21 @@ The tasks you will accomplish in this step are:
     ```
 1. Connect to the container **CDB2**.
     ```
-    <copy>conn sys/oracle@localhost:1524/cdb2 as sysdba;</copy>
+    <copy>conn sys/oracle@localhost:1523/cdb1 as sysdba;</copy>
     ```
 
     ```
-    <copy>alter system set local_listener='LISTCDB1' scope=both;</copy>
+    <copy>alter system set REMOTE_LISTENER = "(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1524))" scope=both;</copy>
     ```
 
-    ![](./images/step9.1-changelistener.png " ")
 
-2. Connect to **CDB2** and relocate **OE** using the database link **oe@cdb1_link**.
+2. Connect to **CDB2**, set REMOTE_LISTENER and relocate **OE** using the database link **oe@cdb1_link**.
 
     ```
-    <copy>conn sys/oracle@localhost:1523/cdb2 as sysdba;</copy>
+    <copy>
+    conn sys/oracle@localhost:1523/cdb2 as sysdba;
+    alter system set REMOTE_LISTENER = "(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1523))" scope=both;
+    </copy>
     ```
 
     ```
@@ -992,39 +995,10 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step9.3-showcdb1pdbs.png " ")
 
-4. Close and remove the **OE** pluggable database.
-
-    ```
-    <copy>conn sys/oracle@localhost:1523/cdb2 as sysdba</copy>
-    ```
-
-    ```
-    <copy>alter pluggable database oe close;</copy>
-    ```
-
-    ```
-    <copy>drop pluggable database oe including datafiles;</copy>
-    ```
-
+  Observer that the write load is still running, but the PDB OE has been relocated from CDB1 to CDB2.
     ![](./images/step9.4-removeoepdb.png " ")
 
 5. The load program isn't needed anymore and that window can be closed.
-
-6. If you are going to continue to use this environment you will need to change **CDB2** back to use **LISTCDB2**.
-
-    ```
-    <copy>sqlplus /nolog</copy>
-    ```
-
-    ```
-    <copy>conn sys/oracle@localhost:1523/cdb2 as sysdba;</copy>
-    ```
-
-    ```
-    <copy>alter system set local_listener='LISTCDB2' scope=both;</copy>
-    ```
-
-    ![](./images/step9.6-changetolistcdb2.png " ")
 
 ## Lab Cleanup
 
