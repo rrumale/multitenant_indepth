@@ -169,6 +169,9 @@ The setup should have  two container databases running:
    APP_STATEMENT
    --------------------------------------------------------------------------------
    SYS
+   ````
+   ````
+   <copy>
    BEGIN DBMS_APPLICATION_INFO.SET_MODULE('sqlplus@mtv16 (TNS V1-V3)', ''); END;
    alter pluggable database application APP01 begin install '1.0'
    create user app_test identified by values *
@@ -176,7 +179,7 @@ The setup should have  two container databases running:
    create table app_test.mytable (id number)
    insert into app_test.mytable values (1)
    commit
-    alter pluggable database application APP01 end install
+   alter pluggable database application APP01 end install
    ````
 
    As you can see, each statement that we have executed will be recorded. Any statements that lead to an error (because of a typo or because of another error) are discarded. This way the APPLICATION is basically the install script you would normally run for a new installation at a new customer.
