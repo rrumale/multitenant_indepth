@@ -130,7 +130,7 @@ The setup should have  two container databases running:
    <copy>
    alter session set container=APP_ROOT;
    alter pluggable database application APP01 begin install '1.0';
-   /copy>
+   </copy>
    ```
 
    One of the things we can do now is create a new App user and create some objects for this user.
