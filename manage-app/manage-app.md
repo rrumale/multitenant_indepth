@@ -206,6 +206,7 @@ The setup should have  two container databases running:
    8.  Display the available PDBs in this container
 
    ````
+   <copy>show pdbs</copy>
    SQL> show pdbs
        CON_ID CON_NAME                       OPEN MODE  RESTRICTED
    ---------- ------------------------------ ---------- ----------
