@@ -179,7 +179,7 @@ The setup should have  two container databases running:
     alter pluggable database application APP01 end install
    ````
 
-    As you can see, each statement that we have executed will be recorded. Any statements that lead to an error (because of a typo or because of another error) are discarded. This way the APPLICATION is basically the install script you would normally run for a new installation at a new customer.
+   As you can see, each statement that we have executed will be recorded. Any statements that lead to an error (because of a typo or because of another error) are discarded. This way the APPLICATION is basically the install script you would normally run for a new installation at a new customer.
 
    The Application can be installed in an Application PDB.
 
