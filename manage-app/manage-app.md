@@ -169,9 +169,6 @@ The setup should have  two container databases running:
    APP_STATEMENT
    --------------------------------------------------------------------------------
    SYS
-   ````
-   ````
-   <copy>
    BEGIN DBMS_APPLICATION_INFO.SET_MODULE('sqlplus@mtv16 (TNS V1-V3)', ''); END;
    alter pluggable database application APP01 begin install '1.0'
    create user app_test identified by values *
