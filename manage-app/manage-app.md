@@ -176,10 +176,10 @@ The setup should have  two container databases running:
    create table app_test.mytable (id number)
    insert into app_test.mytable values (1)
    commit
-    alter pluggable database application APP01 end install
+   alter pluggable database application APP01 end install
    ````
 
-    As you can see, each statement that we have executed will be recorded. Any statements that lead to an error (because of a typo or because of another error) are discarded. This way the APPLICATION is basically the install script you would normally run for a new installation at a new customer.
+   As you can see, each statement that we have executed will be recorded. Any statements that lead to an error (because of a typo or because of another error) are discarded. This way the APPLICATION is basically the install script you would normally run for a new installation at a new customer.
 
    The Application can be installed in an Application PDB.
 
@@ -349,9 +349,9 @@ The setup should have  two container databases running:
             ID DESCRIPTION
     ---------- --------------------
              1
-              2 Two
-    ````
+             2 Two
 
+````
 
 
 ##  Task 7: Upgrade Applications
