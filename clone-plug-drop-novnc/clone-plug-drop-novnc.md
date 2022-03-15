@@ -168,7 +168,7 @@ This section looks at how to create a new PDB. You will create a pluggable datab
     ![](./images/step1.9-containers.png " ")
 
 ## Task 3: Hot Clone PDB
-This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant feature was introduced, we had to change source PDB to READ ONLY mode to clone. However, since 12.2, we can clone a PDB  when the source is open in READ WRITE mode. This feature is also called HOT clone. Hot Clone relies on reading the online Redolog files and Archivelog files. -- If all the changes are available in the online Redolog files, then Hot cloneing will successed in NOARCHIVELOG mode.
+This section looks at how to clone a PDB. In Oracle 12.1 when Multitenant feature was introduced, we had to change source PDB to READ ONLY mode to clone. However, since 12.2, we can clone a PDB  when the source is open in READ WRITE mode. This feature is also called HOT clone. Hot Clone relies on reading the online Redolog files and Archivelog files. -- If all the changes are available in the online Redolog files, then Hot cloneing will successed even in NOARCHIVELOG mode.
 
 The tasks you will accomplish in this step are:
 - Clone a pluggable database **PDB2** into **PDB3**
@@ -178,7 +178,7 @@ The tasks you will accomplish in this step are:
     ```
     <copy>connect sys/oracle@localhost:1523/cdb1 as sysdba</copy>
     ```
-2. Verify that Archiving is Disabled.
+2. check the status of archive log mode.
     ```
     <copy>archive log list</copy>
     SQL> archive log list
@@ -798,7 +798,7 @@ The tasks you will accomplish in this step are:
 
     ![](./images/step7.7-checkrecordsoe.png " ")
 
-     While DML operations are going on in source PDB, We could create a remote clone. Note that both source and target CDBs are in NOARCHIVE LOG mode.
+     While DML operations are going on in source PDB, We could create a remote clone.
 
 ## Task 9: Snanshot Clone
   You can create a snapshot copy PDB by executing a CREATE PLUGGABLE DATABASE ... FROM ... **SNAPSHOT COPY** statement.

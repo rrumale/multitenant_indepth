@@ -349,9 +349,9 @@ The setup should have  two container databases running:
             ID DESCRIPTION
     ---------- --------------------
              1
-              2 Two
-    ````
+             2 Two
 
+````
 
 
 ##  Task 7: Upgrade Applications
